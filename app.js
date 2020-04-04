@@ -11,7 +11,10 @@ var organizationsRouter=require('./routes/organizationsRouter');
 var AidedPeopleRouter=require('./routes/AidedePeopleRouter');
 
 var app = express();
-
+var mongoose=require("mongoose");
+mongoose.connect('mongodb+srv://admin:admin@cluster0-f7cep.mongodb.net/test?retryWrites=true&w=majority',{
+  useMongoClient:true
+})
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(cors());
