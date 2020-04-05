@@ -9,12 +9,16 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/usersRoute');
 var organizationsRouter=require('./routes/organizationsRouter');
 var AidedPeopleRouter=require('./routes/AidedePeopleRouter');
+const passport = require('passport');
+require('./passport');
 
 var app = express();
 var mongoose=require("mongoose");
 mongoose.connect('mongodb+srv://admin:admin@cluster0-f7cep.mongodb.net/test?retryWrites=true&w=majority',{
-  useMongoClient:true
-})
+  useMongoClient:true,
+  useNewUrlParser:true
+}).then(()=>{console.log('connected to DB')})
+.catch(()=>{console.log('not connected to DB')})
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(cors());
@@ -22,8 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/organizations', organizationsRouter);
-app.use('/aidedPeople', AidedPeopleRouter);
+app.use('/organizations',passport.authenticate('jwt', {session: false}), organizationsRouter);
+app.use('/aidedPeople',passport.authenticate('jwt', {session: false}), AidedPeopleRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
