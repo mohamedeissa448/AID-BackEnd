@@ -28,6 +28,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
+app.options('*', cors()) // enable pre-flight request for DELETE request
+app.use((req,res,next)=>{
+  res.header("Access-Control-Allow-Orign","*")
+  res.header("Access-Control-Allow-Headers","*")
+  if(req.method=="OPTIONS"){
+    res.header("Access-Control-Allow-Methods","*");
+    return res.status(200).send({})
+  }
+})
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

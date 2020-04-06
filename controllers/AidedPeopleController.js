@@ -62,7 +62,18 @@ module.exports={
                 });
               }
         })
+    },
+    deleteHumanById:(req,res)=>{
+      AidedHuman.deleteOne({_id:req.body._id},(err)=>{
+        if (err) {
+          response.send({ message: err });
+        }
+         else {
+          response.send({message:true});
+        }
+      });
     }
+  
 }
 function addHumanHelperFn(req,res,human){
 

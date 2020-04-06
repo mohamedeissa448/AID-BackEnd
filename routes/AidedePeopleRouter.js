@@ -13,6 +13,8 @@ Router.post('/addHuman',(req,res,next)=>{
 Router.post('/editHumanById',(req,res,next)=>{
     aidedPeopleController.editHumanById(req,res)
 })
-
+Router.post('/deleteHumanById',(req,res,next)=>{
+    aidedPeopleController.deleteHumanById(req,res)
+})
 
 module.exports=Router
