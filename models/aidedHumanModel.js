@@ -1,8 +1,8 @@
 const mongoose=require('mongoose');
-const userSchema=mongoose.Schema({//needs modification to use passport
+const aidedHumanSchema=mongoose.Schema({//needs modification to use passport
       "اسم الام وشهرتها":String,
       "اسم الاب":String,
       "الشهره":String,
       "الأسم":String,
 })
-module.exports=mongoose.model('User',userSchema)
+module.exports=mongoose.model('AidedHuman',aidedHumanSchema)

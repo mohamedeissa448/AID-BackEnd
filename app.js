@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/organizations',passport.authenticate('jwt', {session: false}), organizationsRouter);
-app.use('/aidedPeople',passport.authenticate('jwt', {session: false}), AidedPeopleRouter);
+app.use('/aidedPeople', AidedPeopleRouter);
 app.use('/files',filesRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -49,6 +49,7 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+  console.log("errrrror",err)
 });
 
 module.exports = app;
