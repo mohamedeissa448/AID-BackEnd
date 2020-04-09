@@ -66,26 +66,40 @@ module.exports={
     deleteHumanById:(req,res)=>{
       AidedHuman.deleteOne({_id:req.body._id},(err)=>{
         if (err) {
-          response.send({ message: err });
+          res.send({ message: err });
         }
          else {
-          response.send({message:true});
+          res.send({message:true});
         }
       });
     }
   
 }
 function addHumanHelperFn(req,res,human){
-
+    console.log("humans",human)
     const newHuman=new AidedHuman({
         "اسم الام وشهرتها":human["اسم الام وشهرتها"],
         "اسم الاب":human["اسم الاب"],
         "الشهره":human["الشهره"],
         "الأسم":human["الأسم"],
+        "محل الولاده":human["محل الولاده"],
+      "تاريخ الولاده":human["تاريخ الولاده"],
+      "الجنس":human["الجنس"],
+      "الوضع العائلي":human["الوضع العائلي"],
+      "اسم الزوج وشهرته":human["اسم الزوج وشهرته"],
+      "مكان القيد":human["مكان القيد"],
+      "رقم القيد (السجل المدني":human["رقم القيد (السجل المدني"],
+      "القضاء للقيد":human["القضاء للقيد"],
+      "المحافظه للقيد":human["المحافظه للقيد"],
+      "الجنسيه":human["الجنسيه"],
+      //"العنوان":human["العنوان"],
+      "عدد الأبناء":human["عدد الأبناء"],
+      //"أقرباء-صله القربي":human["أقرباء-صله القربي"],
+      //"المساعدات المقدمه":human["المساعدات المقدمه"]
     });
     newHuman.save((err,document)=>{
         if (err) {
-            res.send({ message: false });
+           // res.send({ message: false });
           } else if (document) {
               
             

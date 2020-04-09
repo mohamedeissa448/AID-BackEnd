@@ -10,7 +10,7 @@ var usersRouter = require('./routes/usersRoute');
 var organizationsRouter=require('./routes/organizationsRouter');
 var AidedPeopleRouter=require('./routes/AidedePeopleRouter');
 var filesRouter=require('./routes/filesRouter');
-
+var servicesRouter=require('./routes/servicesRouter')
 const passport = require('passport');
 require('./passport');
 
@@ -28,22 +28,23 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
-app.options('*', cors()) // enable pre-flight request for DELETE request
-app.use((req,res,next)=>{
+//app.options('*', cors()) // enable pre-flight request for DELETE request
+/*app.use((req,res,next)=>{
   res.header("Access-Control-Allow-Orign","*")
   res.header("Access-Control-Allow-Headers","*")
   if(req.method=="OPTIONS"){
     res.header("Access-Control-Allow-Methods","*");
     return res.status(200).send({})
   }
-})
+})*/
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/organizations',passport.authenticate('jwt', {session: false}), organizationsRouter);
 app.use('/aidedPeople', AidedPeopleRouter);
-app.use('/files',filesRouter)
+app.use('/files',filesRouter);
+app.use('/services',servicesRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
