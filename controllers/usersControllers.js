@@ -1,27 +1,33 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const passport = require("passport");
-const config=require("../config")
-
-module.exports={
-    login:(req,res)=>{
-        passport.authenticate('local', {session: false}, (err, user, info) => {
-            if (err || !user) {
-                return res.status(400).json({
-                    message: 'Something is not right',
-                    user   : user
-                });
-            }
-           req.login(user, {session: false}, (err) => {
-               if (err) {
-                   res.send(err);
-               }
-               // generate a signed son web token with the contents of user object and return it in the response
-               const token = jwt.sign(user, config.passportSecretKey);
-               return res.json({user, token});
-            });
-        })(req, res);
-    },
-    logout:(req,res)=>{
-        
-    }
-}
+const config = require("../config");
+const authenticate = require("../authenticate");
+const User = require("../models/userModel");
+module.exports = {
+  login: (req, res) => {
+    const token = authenticate.getToken({ _id: req.user._id });
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.json({ succcess: true, token: token, status: "loging Successful" });
+  },
+  logout: (req, res) => {},
+  signUp: (req, res) => {
+    User.register(
+      newUser({ username: req.body.username }),
+      req.body.password,
+      (err, user) => {
+        if (err) {
+          res.statusCode = 500;
+          res.setHeader("Content-Type", "application/json");
+          res.json({ err: err });
+        } else {
+          passport.authenticate("local")(req, res, () => {
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.json({ succcess: true, status: "Registration Successful" });
+          });
+        }
+      }
+    );
+  }
+};

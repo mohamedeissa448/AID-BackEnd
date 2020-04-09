@@ -1,3 +1,3 @@
-module.exports={
-passportSecretKey:"my secret"
-}
+module.exports = {
+  jwtSecretKey: "my secret"
+};

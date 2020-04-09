@@ -1,13 +1,18 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-
-var usersController=require("../controllers/usersControllers")
+var passport = require("passport");
+var usersController = require("../controllers/usersControllers");
 
 /* GET users listing. */
-router.post('/login', function(req, res, next) {
-  usersController.login(req,res)
+router.post("/login", passport.authenticate("local"), function(req, res, next) {
+  //this function will be executed only if loging in succeded
+  //it will add a property req.user
+  usersController.login(req, res);
 });
-router.post('/logout', function(req, res, next) {
-  usersController.logout(req,res)
+router.post("/signUp", function(req, res, next) {
+  usersController.signUp(req, res);
+});
+router.post("/logout", function(req, res, next) {
+  usersController.logout(req, res);
 });
 module.exports = router;
